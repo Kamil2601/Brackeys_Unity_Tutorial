@@ -5,10 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     new public Rigidbody rigidbody;
-    public Transform player;
+    //public Transform player;
     public float forwardforce = 2000f;
     public float sidewaysforce = 500f;
-
     public float moveBorder = 7.5f;
 
     // Update is called once per frame
@@ -16,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     {
         rigidbody.AddForce(0,0,forwardforce * Time.deltaTime);
 
-        if (player.position.x <= moveBorder && player.position.x >= -moveBorder)
+        if (rigidbody.position.x <= moveBorder && rigidbody.position.x >= -moveBorder)
         {
             if (Input.GetKey("d"))
             {
@@ -26,6 +25,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 rigidbody.AddForce(-sidewaysforce * Time.deltaTime,0,0, ForceMode.VelocityChange);
             }
+        }
+
+        if (rigidbody.position.y < -1)
+        {
+            FindObjectOfType<GameManager>().EndGame();
         }
     }
 }
